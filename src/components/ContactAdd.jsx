@@ -3,36 +3,27 @@ import '../styles/ContactAdd.css';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import Notiflix from 'notiflix';
-import { useSelector, useDispatch } from 'react-redux';
-import { addContact } from '../redux/contacts/contact-slice';
-import { getAllContacts } from '../redux/contacts/contact-selectors';
 import Swal from 'sweetalert2'
+import { useDispatch } from 'react-redux';
+import { fetchAddContact } from 'redux/contacts/contact-operations';
+
 
 const Form = () => {
 
   const dispatch = useDispatch();
-  const contacts = useSelector(getAllContacts);
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
   const formSumbit = e => {
     e.preventDefault();
-    const nameToAdd = name;
-    const addCheck = contacts?.find(({ name }) => name.includes(nameToAdd));
-    if (!addCheck) {
-      dispatch(addContact({ name, number }));
-      Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: `${name} was added...`,
-        showConfirmButton: false,
-        timer: 1500
-      })
-      
-
-    } else {
-      Notiflix.Report.success(`${name} already is in your contacts`);
-    }
+    dispatch(fetchAddContact({ name, number }));
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: `${name} was added...`,
+      showConfirmButton: false,
+      timer: 1500
+    });
     reset();
   };
   const reset = () => {

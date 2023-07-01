@@ -1,6 +1,5 @@
-import { PersistGate } from 'redux-persist/es/integration/react';
 import { Provider } from 'react-redux';
-import { store, persistor } from 'redux/store';
+import store from 'redux/store';
 
 import './App.css';
 import Form from 'components/ContactAdd'
@@ -13,14 +12,11 @@ const App = () => {
     return (
       <div className="App">
         <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
             <Tittle text="Nombre"/>
             <Form/>
-
             <Tittle text="Contacts"/>
             <Filter/>
             <Contacts/>
-          </PersistGate>
         </Provider>
 
       </div>
